@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="ccbs" id="Project_19a7" database="MySql" >
+	<schema name="ccbs" >
+		<table name="branch_dimension_table" prior="branch_dimen" >
+			<column name="branch_code" type="bigint" jt="-5" mandatory="y" />
+			<column name="branch_name" type="varchar" length="25" jt="12" />
+			<column name="branch_street" type="varchar" length="25" jt="12" />
+			<column name="branch_city" type="varchar" length="25" jt="12" />
+			<column name="branch_state" type="varchar" length="25" jt="12" />
+			<column name="branch_zip" type="int" jt="4" />
+			<column name="branch_phone" type="varchar" length="25" jt="12" />
+			<index name="pk_branch_dimension_table_branch_code" unique="PRIMARY_KEY" >
+				<column name="branch_code" />
+			</index>
+			<fk name="fk_branch_dimension_table" to_schema="ccbs" to_table="transcreditcard_fact_table" >
+				<fk_column name="branch_code" pk="branch_code" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="customer_dimension_table" prior="customer" >
+			<column name="cust_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="cust_f_name" type="varchar" length="40" jt="12" />
+			<column name="cust_m_name" type="varchar" length="40" jt="12" />
+			<column name="cust_l_name" type="varchar" length="40" jt="12" />
+			<column name="cust_cc_no" type="bigint" jt="-5" />
+			<column name="card_type" type="varchar" length="40" jt="12" />
+			<column name="card_limit" type="bigint" jt="-5" />
+			<column name="card_end_date" type="date" jt="91" />
+			<column name="cust_ssn" type="bigint" jt="-5" />
+			<column name="cust_street" type="varchar" length="40" jt="12" />
+			<column name="cust_city" type="varchar" length="40" jt="12" />
+			<column name="cust_state" type="varchar" length="40" jt="12" />
+			<column name="cust_country" type="varchar" length="40" jt="12" />
+			<column name="cust_zip" type="int" jt="4" />
+			<column name="cust_phone" type="varchar" length="40" jt="12" />
+			<column name="cust_email" type="varchar" length="50" jt="12" />
+			<index name="pk_customer_dimension_table_cust_id" unique="PRIMARY_KEY" >
+				<column name="cust_id" />
+			</index>
+			<fk name="fk_customer_dimension_table" to_schema="ccbs" to_table="transcreditcard_fact_table" >
+				<fk_column name="cust_id" pk="cust_id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="transcreditcard_fact_table" prior="transcreditcard_" >
+			<column name="tran_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="tran_date" type="date" jt="91" />
+			<column name="cust_id" type="bigint" jt="-5" />
+			<column name="cust_cc_no" type="bigint" jt="-5" />
+			<column name="cust_ssn" type="bigint" jt="-5" />
+			<column name="branch_code" type="bigint" jt="-5" />
+			<column name="tran_type" type="varchar" length="25" jt="12" />
+			<column name="tran_value" type="int" jt="4" />
+			<index name="unq_transcreditcard_fact_table_branch_code" unique="UNIQUE_KEY" >
+				<column name="branch_code" />
+			</index>
+			<index name="unq_transcreditcard_fact_table_cust_id" unique="UNIQUE_KEY" >
+				<column name="cust_id" />
+			</index>
+			<index name="pk_transcreditcard_fact_table_tran_id" unique="PRIMARY_KEY" >
+				<column name="tran_id" />
+			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+	</schema>
+	<connector name="MyDb" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-8.0.23.jar" driver_desc="Standard" url="jdbc:mysql://localhost:3306?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=UTF8&amp;zeroDateTimeBehavior=convertToNull&amp;useOldAliasMetadataBehavior=true" host="localhost" port="3306" user="root" />
+	<layout name="Default Layout" id="Layout_93c" joined_routing="y" show_column_type="y" show_relation="columns" >
+		<entity schema="ccbs" name="branch_dimension_table" color="C1D8EE" x="48" y="80" />
+		<entity schema="ccbs" name="customer_dimension_table" color="C1D8EE" x="640" y="48" />
+		<entity schema="ccbs" name="transcreditcard_fact_table" color="C1D8EE" x="320" y="160" />
+	</layout>
+</project>
